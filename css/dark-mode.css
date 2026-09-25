@@ -1,0 +1,30 @@
+/* ============================================================
+   DARK MODE — targeted overrides
+   Most theming is handled by CSS custom properties in style.css
+   (:root[data-theme="dark"]). This file covers the handful of
+   spots that need a non-variable tweak in dark mode.
+   ============================================================ */
+
+:root[data-theme="dark"] .search-bar {
+  background: rgba(255,255,255,0.94);
+}
+
+:root[data-theme="dark"] .dest-card-fav {
+  background: rgba(25,28,21,0.85);
+  color: #ddd;
+}
+:root[data-theme="dark"] .dest-card-fav.active { color: #ff6b5b; }
+
+:root[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, #21251B 25%, #2C3024 37%, #21251B 63%);
+  background-size: 400% 100%;
+}
+
+:root[data-theme="dark"] .btn-icon { background: var(--c-surface); }
+
+:root[data-theme="dark"] .leaflet-tile { filter: brightness(0.82) invert(1) contrast(0.9) hue-rotate(180deg) saturate(0.6); }
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #333; }
+
+:root[data-theme="dark"] .pill-select option,
+:root[data-theme="dark"] .filter-select option { color: #111; }

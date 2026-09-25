@@ -1,0 +1,44 @@
+/* ============================================================
+   RESPONSIVE REFINEMENTS — tablet & mobile
+   (style.css already carries most breakpoints inline;
+    this file adds cross-cutting layout fixes.)
+   ============================================================ */
+
+@media (max-width: 1080px) {
+  .container { max-width: 100%; }
+}
+
+@media (max-width: 880px) {
+  .hero { min-height: 78vh; }
+  .hero-stats { gap: var(--sp-5); }
+  .detail-actions-row { flex-direction: column; align-items: flex-start; }
+  .detail-side { position: static; }
+}
+
+@media (max-width: 720px) {
+  .section { padding: var(--sp-6) 0; }
+  .site-nav { height: 64px; }
+  :root { --nav-h: 64px; }
+  .search-bar { padding-left: 16px; }
+  .search-bar input { padding: 10px 0; font-size: 0.94rem; }
+  .cta-row .btn { flex: 1 1 auto; }
+  .card-grid { gap: var(--sp-4); }
+  .footer-cols { gap: var(--sp-5); }
+  .footer-cols > div { min-width: 45%; }
+  .detail-meta-row { gap: var(--sp-4); }
+  .filter-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .filter-bar::-webkit-scrollbar { height: 4px; }
+  .plan-layout, .detail-layout { gap: var(--sp-5); }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2.1rem; }
+  .mood-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-strip img { width: 160px; height: 110px; }
+  .form-card { padding: var(--sp-5); }
+}
+
+/* prevent any accidental horizontal overflow */
+html, body { max-width: 100%; overflow-x: hidden; }
+table { max-width: 100%; }
