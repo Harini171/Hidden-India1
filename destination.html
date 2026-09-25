@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Destination — Hidden India</title>
+<meta name="description" id="pageDesc" content="">
+<script>document.documentElement.setAttribute('data-theme', localStorage.getItem('hi_theme') ? JSON.parse(localStorage.getItem('hi_theme')) : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 2 21h20L12 2z"/><path d="M12 9v6"/><circle cx="12" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        Hidden India
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="plan-trip.html">Plan Trip</a></li>
+        <li><a href="recommendations.html">Recommendations</a></li>
+        <li><a href="my-list.html">My List</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" aria-label="Toggle dark mode"><span class="knob"></span></button>
+        <button class="nav-icon-btn nav-burger" id="navBurger" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="plan-trip.html">Plan Trip</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="my-list.html">My List</a>
+  </div>
+
+  <div id="notFound" style="display:none;">
+    <div class="section container text-center">
+      <h1>Destination not found</h1>
+      <p>We couldn't find that destination in our collection of 328 places.</p>
+      <a href="explore.html" class="btn btn-primary">Browse All Destinations</a>
+    </div>
+  </div>
+
+  <div id="detailRoot" style="display:none;">
+    <header class="detail-hero">
+      <div class="detail-hero-media"><img id="heroImg" src="" alt=""></div>
+      <div class="detail-hero-content container">
+        <div class="detail-loc" id="locLine"></div>
+        <h1 id="destName" style="color:#fff;"></h1>
+        <p class="detail-tagline" id="tagline"></p>
+        <div class="detail-tags" id="styleTags"></div>
+        <div class="detail-actions-row">
+          <div class="detail-meta-row">
+            <div class="detail-meta-item"><div><span class="meta-label">Budget</span><span id="metaBudget"></span></div></div>
+            <div class="detail-meta-item"><div><span class="meta-label">Duration</span><span id="metaDuration"></span></div></div>
+            <div class="detail-meta-item"><div><span class="meta-label">Best Season</span><span id="metaSeason"></span></div></div>
+            <div class="detail-meta-item"><div><span class="meta-label">Crowd</span><span id="metaCrowd"></span></div></div>
+          </div>
+          <div class="detail-btns">
+            <button class="btn-icon" id="favBtn" aria-label="Save"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;"><path d="M12 21s-7.5-4.6-10-9.2C.5 8.4 2.3 5 5.7 5c2 0 3.4 1 4.3 2.4C10.9 6 12.3 5 14.3 5c3.4 0 5.2 3.4 3.7 6.8C19.5 16.4 12 21 12 21z"/></svg></button>
+            <button class="btn-icon" id="shareBtn" aria-label="Share"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
+            <a href="plan-trip.html" class="btn btn-primary" id="planTripBtn">Plan Trip</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="gallery-strip" id="galleryStrip"></div>
+    </div>
+
+    <main class="section container" style="padding-top:0;">
+      <div class="detail-tabs" id="detailTabs">
+        <div class="detail-tab active" data-tab="overview">Overview</div>
+        <div class="detail-tab" data-tab="things">Things to Do</div>
+        <div class="detail-tab" data-tab="food">Food &amp; Cafés</div>
+        <div class="detail-tab" data-tab="photo">Photo Spots</div>
+        <div class="detail-tab" data-tab="nearby">Nearby</div>
+        <div class="detail-tab" data-tab="stay">Stay</div>
+        <div class="detail-tab" data-tab="map">Map</div>
+      </div>
+
+      <div class="detail-layout">
+        <div>
+          <div class="tab-panel active" id="panel-overview">
+            <h3>Why Visit?</h3>
+            <p id="overviewText"></p>
+            <h3 class="mt-6">What Makes It Special</h3>
+            <div class="info-grid" id="whyVisitGrid"></div>
+          </div>
+
+          <div class="tab-panel" id="panel-things">
+            <h3>Things to Do</h3>
+            <div class="item-grid" id="thingsGrid"></div>
+          </div>
+
+          <div class="tab-panel" id="panel-food">
+            <h3>Local Food</h3>
+            <div class="chip-list mb-0" id="foodChips" style="margin-bottom:var(--sp-6);"></div>
+            <h3 class="mt-6">Popular Cafés</h3>
+            <div class="chip-list" id="cafeChips"></div>
+          </div>
+
+          <div class="tab-panel" id="panel-photo">
+            <h3>Photo Spots</h3>
+            <div class="item-grid" id="photoGrid"></div>
+          </div>
+
+          <div class="tab-panel" id="panel-nearby">
+            <h3>Nearby Places</h3>
+            <div class="chip-list" id="nearbyChips" style="margin-bottom:var(--sp-6);"></div>
+            <h3>A Quieter Alternative To</h3>
+            <div class="chip-list" id="altChips" style="margin-bottom:var(--sp-6);"></div>
+            <div id="altToThisWrap">
+              <h3>Recommended Alternatives</h3>
+              <div class="card-grid" id="similarGrid"></div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panel-stay">
+            <h3>Where to Stay</h3>
+            <p>We don't list individual hotels for this destination yet, but you can find real, up-to-date stays and reviews nearby — the same live places also appear as markers on the map below.</p>
+            <a href="#" id="findStayBtn" target="_blank" rel="noopener" class="btn btn-primary">Find Hotels Nearby →</a>
+            <a href="#" id="findFoodBtn" target="_blank" rel="noopener" class="btn btn-outline" style="margin-left:var(--sp-2);">Find Restaurants &amp; Cafés Nearby →</a>
+          </div>
+
+          <div class="tab-panel" id="panel-map">
+            <h3>Location</h3>
+            <div id="detailMapLarge" style="width:100%;height:420px;border-radius:var(--r-md);overflow:hidden;background:var(--c-surface-2);"></div>
+            <div id="mapLegendLarge" style="font-size:0.82rem;color:var(--c-text-muted);margin-top:var(--sp-2);"></div>
+            <a href="#" id="gmapsLinkLarge" target="_blank" rel="noopener" class="btn btn-outline mt-6">Open in Google Maps →</a>
+          </div>
+        </div>
+
+        <aside class="detail-side">
+          <div class="side-card">
+            <h3>Location</h3>
+            <div id="detailMap"><div class="map-fallback">Map unavailable</div></div>
+            <div id="mapLegend" style="font-size:0.78rem;color:var(--c-text-muted);margin:var(--sp-2) 0 var(--sp-3);"></div>
+            <a href="#" id="gmapsLink" target="_blank" rel="noopener" class="btn btn-outline btn-block">Open in Google Maps</a>
+          </div>
+          <div class="side-card">
+            <h3>Quick Facts</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:0.88rem;">
+              <div><strong>State:</strong> <span id="qfState"></span></div>
+              <div><strong>Region:</strong> <span id="qfRegion"></span></div>
+              <div><strong>Type:</strong> <span id="qfType"></span></div>
+              <div><strong>Seasons:</strong> <span id="qfSeasons"></span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-cols">
+        <div style="max-width:280px;">
+          <div class="brand">Hidden India</div>
+          <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;">Discover the India you haven't seen — 328 offbeat destinations across every state, curated for travellers who want more than the postcard.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="explore.html">All Destinations</a>
+          <a href="plan-trip.html">Plan a Trip</a>
+          <a href="recommendations.html">Recommendations</a>
+        </div>
+        <div>
+          <h4>You</h4>
+          <a href="my-list.html">My List</a>
+          <a href="index.html">Surprise Me</a>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Hidden India. A client-side travel discovery project — no backend, no database.</div>
+    </div>
+  </footer>
+
+<script src="js/destinations.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/destination.js"></script>
+</body>
+</html>
