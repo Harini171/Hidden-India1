@@ -17,23 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const states = [...new Set(all.map((d) => d.state))].sort();
   const types = [...new Set(all.map((d) => d.type))].sort();
   const budgets = [...new Set(all.map((d) => d.budgetLabel))];
-  const durations = [...new Set(all.map((d) => d.durationDays))].sort((a, b) => a - b);
+  
 
   fillSelect(document.getElementById("fState"), states);
   fillSelect(document.getElementById("fType"), types);
   fillSelect(document.getElementById("fBudget"), budgets);
-  fillSelect(document.getElementById("fDuration"), durations, (v) => v + " Days");
-  fillSelect(document.getElementById("fMood"), HI_MOODS.map((m) => m.label));
+  
 
   function goExplore(params) {
     const qs = new URLSearchParams(params).toString();
     window.location.href = "explore.html" + (qs ? "?" + qs : "");
   }
 
-  ["fState", "fType", "fBudget", "fDuration", "fMood"].forEach((id) => {
+  ["fState", "fType", "fBudget"].forEach((id) => {
     document.getElementById(id).addEventListener("change", function () {
       if (!this.value) return;
-      const map = { fState: "state", fType: "type", fBudget: "budget", fDuration: "duration", fMood: "mood" };
+      const map = { fState: "state", fType: "type", fBudget: "budget" };
       goExplore({ [map[id]]: this.value });
     });
   });
